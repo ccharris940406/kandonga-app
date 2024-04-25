@@ -74,25 +74,25 @@ model Stock {
   amount  Int
 }
 
-model Tag {
+model ProductTag {
   id       String    @id @default(cuid())
   name     String
   Products Product[]
 }
 
-model Category {
+model ProductCategory {
   id       String    @id @default(cuid())
   name     String
   Products Product[]
 }
 
 model Product {
-  id           String         @id @default(cuid())
+  id           String          @id @default(cuid())
   name         String
   short_name   String
   description  String
-  category     Category       @relation(fields: [categoryId], references: [id])
-  tags         Tag[]
+  category     ProductCategory @relation(fields: [categoryId], references: [id])
+  tags         ProductTag[]
   categoryId   String
   Offers       Offer[]
   PurchaseItem PurchaseItem[]
