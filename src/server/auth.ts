@@ -70,10 +70,15 @@ export const authOptions: NextAuthOptions = {
       },
       authorize: async (credentials) => {
         if (credentials === undefined || credentials === null) return null;
-        const { userId, userName } = await api.auth.signIn(credentials);
+        const query = await db.user.findUnique({
+          where: { username: credentials.username },
+        });
+        if (!query) {
+          return null;
+        }
         const user: User = {
-          id: userId,
-          username: userName,
+          id: query.id,
+          username: query.username,
         };
         return user;
       },
